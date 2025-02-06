@@ -1,8 +1,8 @@
-console.log("JavaScript loaded!");
+
 
 // Set up canvas
-const canvas = document.getElementById('backgroundCanvas');
-const ctx = canvas.getContext('2d');
+//const canvas = document.getElementById('backgroundCanvas');
+//const ctx = canvas.getContext('2d');
 
 // Resize the canvas to fill the screen
 canvas.width = window.innerWidth;
@@ -14,9 +14,32 @@ const COLS = 100; // Number of columns in the grid
 const GRID_SPACING = 60; // Distance between points
 const HEIGHT_FACTOR = 80; // Controls how high the grid points can go
 const MOUSE_SENSITIVITY = 0.01; // Controls how strongly the points react to the mouse
-let mouse = { x: undefined, y: undefined }; // Track mouse position
+//let mouse = { x: undefined, y: undefined }; // Track mouse position
 const grid = [];
 const ripples = [];
+
+// This function will start the animation loop
+function startAnimation() {
+
+    console.log("Start Mesh!")
+    // Clear the canvas at the start
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Start the animation loop
+    function animate() {
+        // Your existing animation logic here
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            //particles[i].connect(particles); // Connect particles with lines
+        }
+        
+        animationRequest = requestAnimationFrame(animate); // Request the next frame
+    }
+
+    // Start the animation
+    animate();
+
 
 // Create a grid of points
 function createGrid() {
@@ -147,3 +170,4 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
     createGrid(); // Recreate grid on resize
 });
+}

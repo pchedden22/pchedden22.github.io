@@ -7,6 +7,9 @@
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Button to switch between the hover and mesh animations -->
+    <button id="toggleButton">Switch to Mesh Grid</button>
+
     <div class="hero">
         <canvas id="backgroundCanvas"></canvas>
         <div class="heading">
@@ -15,6 +18,23 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Combined JavaScript file that contains both animations -->
+    <script src="combined.js"></script>
+
+    <script>
+        // Switch the animation when the button is clicked
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            const currentButtonText = document.getElementById('toggleButton').innerText;
+
+            // Switch between hover and mesh animations
+            if (currentButtonText === "Switch to Mesh Grid") {
+                switchToMesh();
+                document.getElementById('toggleButton').innerText = "Switch to Hover Effect";
+            } else {
+                switchToHover();
+                document.getElementById('toggleButton').innerText = "Switch to Mesh Grid";
+            }
+        });
+    </script>
 </body>
 </html>
