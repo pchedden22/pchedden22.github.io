@@ -1,7 +1,118 @@
 <!DOCTYPE html>
-    <html>
-        <body>
-        <h1>Hello World</h1>
-        <p>I'm hosted with GitHub Pages.</p>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phillip's Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #F56600; /* Clemson orange */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #522D80; /* Clemson purple */
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #F56600;
+        }
+        section {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .project {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .project h3 {
+            margin-top: 0;
+        }
+        .github-link {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .github-link a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Phillip's Portfolio</h1>
+        <p>Explore my projects and technical skills</p>
+    </header>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hello! I'm Phillip, a computer science graduate passionate about coding, tech, and problem-solving. I specialize in software development, machine learning, and building impactful applications. Check out my work below and feel free to reach out!</p>
+    </section>
+
+    <section id="projects">
+        <h2>My Projects</h2>
+        <div class="projects">
+            <div class="project">
+                <h3>Weather Prediction App</h3>
+                <p>A web application that uses weather data to predict when to switch to generators and save money for electric companies.</p>
+                <a href="https://github.com/your-username/weather-app" target="_blank">View on GitHub</a>
+            </div>
+            <div class="project">
+                <h3>Driver Rewards Program</h3>
+                <p>A rewards system for drivers, allowing them to track points, redeem rewards, and interact with sponsors.</p>
+                <a href="https://github.com/your-username/driver-rewards" target="_blank">View on GitHub</a>
+            </div>
+            <div class="project">
+                <h3>Sepsis Prediction Model</h3>
+                <p>A machine learning model for early sepsis detection using time series patient data.</p>
+                <a href="https://github.com/your-username/sepsis-prediction" target="_blank">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>If you'd like to get in touch or learn more about my work, feel free to reach out!</p>
+        <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+    </section>
+
+    <div class="github-link">
+        <p>Check out more of my work on <a href="https://github.com/your-username" target="_blank">GitHub</a></p>
+    </div>
+</body>
 </html>
