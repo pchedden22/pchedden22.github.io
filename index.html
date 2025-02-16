@@ -1,40 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phillip's Portfolio</title>
-    <link href="styles.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phillip's Portfolio</title>
+  <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- Button to switch between the hover and mesh animations -->
-    <button id="toggleButton">Switch to Mesh Grid</button>
+  <!-- The animated background canvas -->
+  <canvas id="backgroundCanvas"></canvas>
 
-    <div class="hero">
-        <canvas id="backgroundCanvas"></canvas>
-        <div class="heading">
-            <h1>Hello, I'm Phillip</h1>
-            <p>Full Stack Developer</p>
-        </div>
+  <!-- Hero Section with Navigation & Introduction -->
+  <header class="hero">
+    <nav class="navigation-bar">
+      <ul class="navigation">
+        <li class="navigation__item"><a href="#about">About</a></li>
+        <li class="navigation__item"><a href="#projects">Projects</a></li>
+        <li class="navigation__item"><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="intro-content">
+      <h1>Hello, I'm Phillip</h1>
+      <p>Full Stack Developer</p>
+      <button id="toggleButton">Switch to Mesh Grid</button>
     </div>
+  </header>
 
-    <!-- Combined JavaScript file that contains both animations -->
-    <script src="combined.js"></script>
+  <!-- About Section -->
+  <section id="about" class="content-section">
+    <h2>About Me</h2>
+    <p>
+      I'm Phillip – a passionate full stack developer with a knack for creating
+      visually engaging and user-friendly web applications. I love tackling new
+      challenges and continuously learning new technologies.
+    </p>
+  </section>
 
-    <script>
-        // Switch the animation when the button is clicked
-        document.getElementById('toggleButton').addEventListener('click', function() {
-            const currentButtonText = document.getElementById('toggleButton').innerText;
+  <!-- Projects Section -->
+  <section id="projects" class="content-section">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project">
+        <h3>Project One</h3>
+        <p>
+          A brief description of the project. It highlights the technologies used and the challenges solved.
+        </p>
+        <a href="#" target="_blank">View Project</a>
+      </div>
+      <div class="project">
+        <h3>Project Two</h3>
+        <p>
+          A brief description of the project. It highlights the technologies used and the challenges solved.
+        </p>
+        <a href="#" target="_blank">View Project</a>
+      </div>
+      <!-- Add more project cards as needed -->
+    </div>
+  </section>
 
-            // Switch between hover and mesh animations
-            if (currentButtonText === "Switch to Mesh Grid") {
-                switchToMesh();
-                document.getElementById('toggleButton').innerText = "Switch to Hover Effect";
-            } else {
-                switchToHover();
-                document.getElementById('toggleButton').innerText = "Switch to Mesh Grid";
-            }
-        });
-    </script>
+  <!-- Contact Section -->
+  <section id="contact" class="content-section">
+    <h2>Contact Me</h2>
+    <p>
+      If you'd like to get in touch, feel free to send an email to
+      <a href="mailto:phillip@example.com">phillip@example.com</a>
+    </p>
+    <form class="contact-form" action="#" method="post">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Phillip Hedden. All rights reserved.</p>
+  </footer>
+
+  <!-- External JavaScript for Animations -->
+  <script src="combined.js"></script>
+  <script>
+    // Toggle animation between hover and mesh effects.
+    document.getElementById('toggleButton').addEventListener('click', function () {
+      const btn = document.getElementById('toggleButton');
+      if (btn.innerText === 'Switch to Mesh Grid') {
+        switchToMesh();
+        btn.innerText = 'Switch to Hover Effect';
+      } else {
+        switchToHover();
+        btn.innerText = 'Switch to Mesh Grid';
+      }
+    });
+  </script>
 </body>
 </html>

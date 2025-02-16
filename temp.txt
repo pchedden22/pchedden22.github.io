@@ -1,177 +1,152 @@
-console.log("JavaScript loaded!");
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
 
-// Set up canvas
-const canvas = document.getElementById('backgroundCanvas');
-const ctx = canvas.getContext('2d');
-
-// Resize the canvas to fill the screen
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-const particleCount = 200;
-const MAX_SPEED = 3; // Set a max speed for the particles
-const VELOCITY_DAMPENING = 0.99; // Factor by which speed reduces over time
-const REPEL_RADIUS = 100; // Distance for particles to be affected by click
-const REPEL_FORCE_SCALE = 0.5; // Factor to control the strength of the repulsion
-let mouse = { x: undefined, y: undefined }; // Track cursor position
-let isRepelling = false; // Track whether the mouse button is held down
-
-// Use the window object to track mousemove across the whole screen
-window.addEventListener('mousemove', (event) => {
-    // Use event.clientX and event.clientY to get mouse position relative to the window
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
-});
-
-// Mouse down event listener to enable repulsion
-window.addEventListener('mousedown', () => {
-    isRepelling = true; // Start repelling when the mouse button is pressed
-});
-
-// Mouse up event listener to disable repulsion
-window.addEventListener('mouseup', () => {
-    isRepelling = false; // Stop repelling when the mouse button is released
-});
-
-// Click event listener on window to apply repulsion
-window.addEventListener('click', () => {
-    console.log(`Click!`);
-    for (let i = 0; i < particles.length; i++) {
-        const dx = mouse.x - particles[i].x;
-        const dy = mouse.y - particles[i].y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        // Repel particles that are within the REPEL_RADIUS distance if button is held
-        if (isRepelling && distance < REPEL_RADIUS) {
-            const force = (REPEL_RADIUS - distance) / REPEL_RADIUS; // Calculate force based on proximity
-            // Apply repulsion force away from the cursor, scaled by REPEL_FORCE_SCALE
-            particles[i].speedX -= (dx / distance) * force * REPEL_FORCE_SCALE;  
-            particles[i].speedY -= (dy / distance) * force * REPEL_FORCE_SCALE;
-        }
-    }
-});
-
-// Liquid particle class
-class LiquidParticle {
-    constructor(x, y, speedX, speedY, radius, color) {
-        this.x = x;
-        this.y = y;
-        this.speedX = speedX;
-        this.speedY = speedY;
-        this.radius = radius;
-        this.color = color;
-        this.alpha = 1;
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-
-    update() {
-        if (!isRepelling) {
-            // Apply mouse interaction to particles when the mouse is not clicked (attraction)
-            const dx = mouse.x - this.x;
-            const dy = mouse.y - this.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            // Ensure interaction happens when particles are within a threshold (150px)
-            if (distance < 150) {
-                const force = (150 - distance) / 150; // Calculate force based on proximity
-                this.speedX += (dx / distance) * force * 0.5; // Apply force towards the mouse
-                this.speedY += (dy / distance) * force * 0.5;
-            }
-        }
-
-        // Limit the speed to the maximum defined speed
-        const speed = Math.sqrt(this.speedX * this.speedX + this.speedY * this.speedY);
-        if (speed > MAX_SPEED) {
-            this.speedX = (this.speedX / speed) * MAX_SPEED;
-            this.speedY = (this.speedY / speed) * MAX_SPEED;
-        }
-
-        // Reduce velocity over time (dampen speed)
-        this.speedX *= VELOCITY_DAMPENING;
-        this.speedY *= VELOCITY_DAMPENING;
-
-        // Update position
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // Make particles bounce off the edges
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-            this.speedX = -this.speedX;
-        }
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-            this.speedY = -this.speedY;
-        }
-
-        // Simulate fluid-like motion with smooth randomness
-        this.speedX += (Math.random() - 0.5) * 0.05;
-        this.speedY += (Math.random() - 0.5) * 0.05;
-
-        // Fade the particle over time
-        this.alpha -= 0.01;
-        if (this.alpha <= 0) {
-            this.alpha = 0;
-        }
-
-        this.draw();
-    }
-
-    connect(particles) {
-        for (let i = 0; i < particles.length; i++) {
-            const dx = this.x - particles[i].x;
-            const dy = this.y - particles[i].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 100) { // Distance threshold for drawing lines
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(particles[i].x, particles[i].y);
-                ctx.strokeStyle = `rgba(255, 255, 255, 0.2)`; // White line color with transparency
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-            }
-        }
-    }
 }
 
-// Create random particles
-function createParticles() {
-    for (let i = 0; i < particleCount; i++) {
-        const radius = Math.random() * 3 + 1;
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const speedX = (Math.random() - 0.5) * 2;
-        const speedY = (Math.random() - 0.5) * 2;
-        const color = `rgba(255, 255, 255, 0.8)`; // White particles
-        particles.push(new LiquidParticle(x, y, speedX, speedY, radius, color));
-    }
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
 }
 
-// Animate particles with fluid-like movement
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].connect(particles); // Connect particles with lines
-    }
-    
-    requestAnimationFrame(animateParticles);
+#backgroundCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0e0e0e; /* Dark background for better visibility */
+    z-index: -1; /* Put canvas behind content */
+    pointer-events: none;
 }
 
-// Initialize particles and start animation
-createParticles();
-animateParticles();
+/* Styles for the second animation canvas */
+#contentBackgroundCanvas {
+    position: fixed;  /* Remains fixed during scrolling */
+    top: 0;
+    left: 0;
+    width: 100vw;     /* Full viewport width */
+    height: 100vh;    /* Full viewport height */
+    z-index: -1;      /* Ensure it's behind your page content */
+  }
+  
 
-// Handle resizing the canvas
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    particles = [];
-    createParticles();
-});
+
+#toggleButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgb(41, 41, 41);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.heading h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+
+.heading p {
+    font-size: 1.5em;
+}
+
+/* NAVIGATION BAR */
+.navigation-bar {
+    position: sticky;
+    width: 100%;
+    background: rgb(54, 54, 54);
+    z-index: 10;
+  }
+  .navigation-bar ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .navigation-bar li {
+    margin: 0 1rem;
+  }
+  .navigation-bar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+
+
+
+  /* Styles for the skills section */
+.skills-section {
+    padding: 3rem 1rem;
+    background-color: #f4f4f4;
+    text-align: center;
+  }
+  
+  .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    align-items: center;
+    justify-items: center;
+  }
+  
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .skill-item img {
+    width: 60px; /* Adjust size as needed */
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  
+  .skill-item span {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Hover effect for a bit of interactivity */
+  .skill-item:hover {
+    transform: scale(1.1);
+  }
+
+
+
+  .box-container {
+    display: grid;
+    grid-template-columns: repeat(3, auto); /* 3 boxes in one row */
+    gap: 5px;
+
+  }
+  
+  .box {
+    width: 300px;
+    height: 200px;
+    background-color: transparent; /* Clear center */
+    border: 5px solid;           /* Set the border width */
+    border-image: linear-gradient(45deg, #f84545, #4545f0) 1; /* Apply gradient to the border */
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: #333;
+  }
