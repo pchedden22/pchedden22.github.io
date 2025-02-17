@@ -170,6 +170,18 @@
   height: auto; /* Preserve aspect ratio */
 }
 
+/* Container for the image */
+.project-image-medium {
+  width: 300px; /* adjust this value as needed */
+  flex-shrink: 0; /* prevents the image container from shrinking */
+}
+.project-image-medium img {
+  width: 400px; /* Adjust as needed */
+  height: auto; /* Preserve aspect ratio */
+}
+
+
+
 /* Hover effect */
 .project:hover {
   transform: translateY(-5px);
