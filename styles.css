@@ -111,38 +111,70 @@
     text-align: center;
   }
   
-  /* Projects Grid */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  }
+/* Projects Grid: one project per row */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
   
-  .project {
-    background: #1e1e1e;
-    padding: 20px;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-  }
-  
-  .project:hover {
-    transform: translateY(-5px);
-  }
-  
-  .project h3 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-  }
-  
-  .project p {
-    margin-bottom: 15px;
-  }
-  
-  .project a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
+}
+
+/* Each project is a flex container with two items: text and image */
+.project {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 800px;  /* Control the overall width of the project box */
+  margin: 0 auto;    /* Center the project box on the page */
+  background: #1e1e1e00;
+  padding: 20px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Alternate layout for even projects 
+.project:nth-child(even) {
+  flex-direction: row-reverse;
+}
+*/
+
+/* Container for the text content */
+.project-text {
+  flex: 1;
+  min-width: 200px; /* adjust as needed */
+}
+
+.project-text h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.project-text p {
+  margin-bottom: 15px;
+}
+
+.project-text a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Container for the image */
+.project-image {
+  width: 300px; /* adjust this value as needed */
+  flex-shrink: 0; /* prevents the image container from shrinking */
+}
+.project-image img {
+  width: 600px; /* Adjust as needed */
+  height: auto; /* Preserve aspect ratio */
+}
+
+/* Hover effect */
+.project:hover {
+  transform: translateY(-5px);
+}
+
   
   /* Contact Form */
   .contact-form {
